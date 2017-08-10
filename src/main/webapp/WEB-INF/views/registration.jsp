@@ -20,19 +20,20 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" autofocus required placeholder="Username"/>
                     <div class="text-danger" role="alert">
-                        <form:errors path="username"></form:errors>
+                        <form:errors path="username"/>
+                        <c:out value="${username_error}"/>
                     </div>
                 </div>
                 <div class="form-group ">
                     <input type="password" class="form-control" name="password" required placeholder="Password">
                     <div class="text-danger" role="alert">
-                        <form:errors path="password"></form:errors>
+                        <form:errors path="password"/>
                     </div>
                 </div>
                 <div class="form-group ">
                     <input type="text" class="form-control" name="fullName" required placeholder="Full Name">
                     <div class="text-danger" role="alert">
-                        <form:errors path="fullName"></form:errors>
+                        <form:errors path="fullName"/>
                     </div>
                 </div>
 

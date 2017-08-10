@@ -35,11 +35,8 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         if (isBlank(username)) {
             throw new IllegalArgumentException("Incorrect name of User");
         }
-        final User user = repository.findByUsername(username);
-        if (user == null) {
-            throw new NullPointerException("User with name " + username + " is not exist in database.");
-        }
-        return user;
+        return repository.findByUsername(username);
+
     }
 
     @Transactional
@@ -51,27 +48,12 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
 
-    @Transactional(readOnly = true)
-    public User getAuthenticatedUser() {
-        User user;
-        try {
-            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        } catch (ClassCastException e) {
-            user = new User("anonymousUser");
-        }
-        return user;
-    }
-
-
-
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user;
-        try {
-            user = repository.findByUsername(username);
-        } catch (NullPointerException e) {
-            throw new UsernameNotFoundException(e.getMessage());
+        User user = repository.findByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("User with name " + username + " is not exist in database.");
         }
         return user;
     }

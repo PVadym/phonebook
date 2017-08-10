@@ -21,7 +21,7 @@
                 <div class="col-lg-12">
                     <form:form class="form-horizontal" action="/contact/edit" method="get" role="form"
                                style="display: block;" modelAttribute="contact">
-                        </div>
+                </div>
                 <div class="form-group" hidden>
                     <div class="col-sm-10">
                         <input type="text" name="username" class="form-control"
@@ -32,35 +32,35 @@
                 <div class="form-group" hidden>
                     <label class="control-label col-sm-2" for="id">Id</label>
                     <div class="col-sm-10">
-                        <input type="text" name="id" id="id"  class="form-control"
+                        <input type="text" name="id" id="id" class="form-control"
                                value="${contact.id}">
                     </div>
-                    </div>
-                    <div class="form-group" hidden>
-                        <label class="control-label col-sm-2" for="user.id">Id</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="user.id" id="user.id"  class="form-control"
-                                   value="${contact.user.id}">
-                        </div>
                 </div>
-                        <br>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="lastName">Last Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control"
-                                       placeholder="Last Name" required value="${contact.lastName}">
-                                <div class="text-danger" role="alert">
-                                    <form:errors path="lastName"></form:errors>
-                                </div>
-                            </div>
+                <div class="form-group" hidden>
+                    <label class="control-label col-sm-2" for="user.id">Id</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="user.id" id="user.id" class="form-control"
+                               value="${contact.user.id}">
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="lastName">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control"
+                               placeholder="Last Name" required value="${contact.lastName}">
+                        <div class="text-danger" role="alert">
+                            <form:errors path="lastName"/>
                         </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstName">First Name</label>
                     <div class="col-sm-10">
                         <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control"
-                               placeholder="First Name" requiredvalue="${contact.firstName}">
+                               placeholder="First Name" required value="${contact.firstName}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="firstName"></form:errors>
+                            <form:errors path="firstName"/>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         <input type="text" name="middleName" id="middleName" tabindex="1" class="form-control"
                                placeholder="Middle Name" required value="${contact.middleName}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="firstName"></form:errors>
+                            <form:errors path="middleName"/>
                         </div>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         <input type="text" name="mobilePhone" id="mobilePhone" tabindex="1" class="form-control"
                                placeholder="Mobile Phone" required value="${contact.mobilePhone}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="mobilePhone"></form:errors>
+                            <form:errors path="mobilePhone"/>
                         </div>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                         <input type="text" name="homePhone" id="homePhone" tabindex="1" class="form-control"
                                placeholder="Home Phone" value="${contact.homePhone}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="homePhone"></form:errors>
+                            <form:errors path="homePhone"/>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                         <input type="text" name="address" id="address" tabindex="1" class="form-control"
                                placeholder="Address" value="${contact.address}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="address"></form:errors>
+                            <form:errors path="address"/>
                         </div>
                     </div>
                 </div>
@@ -110,30 +110,28 @@
                         <input type="text" name="email" id="email" tabindex="1" class="form-control"
                                placeholder="E-mail" value="${contact.email}">
                         <div class="text-danger" role="alert">
-                            <form:errors path="email"></form:errors>
+                            <form:errors path="email"/>
                         </div>
                     </div>
                 </div>
 
-
-                        <div class="form-group ">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" tabindex="5"
-                                           class="form-control btn-success" value="Submit">
-                                </div>
-                            </div>
+                <div class="form-group ">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" tabindex="5"
+                                   class="form-control btn-success" value="Submit">
                         </div>
-                        <div class="form-group ">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="reset" tabindex="6"
-                                           class="form-control btn-danger" value="Reset">
-                                </div>
-                            </div>
-                        </div>
-                    </form:form>
+                    </div>
                 </div>
+                <div class="form-group ">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="reset" tabindex="6"
+                                   class="form-control btn-danger" value="Reset">
+                        </div>
+                    </div>
+                </div>
+                </form:form>
             </div>
         </div>
     </div>

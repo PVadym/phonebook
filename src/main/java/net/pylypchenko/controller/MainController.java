@@ -43,6 +43,7 @@ public class MainController {
                 .filter(contact -> contact.getUser()!=null)
                 .filter(contact -> user.getId()==contact.getUser().getId())
                 .collect(Collectors.toList());
+
         modelAndView.addObject("contacts", contacts);
         modelAndView.setViewName("index");
         return modelAndView;

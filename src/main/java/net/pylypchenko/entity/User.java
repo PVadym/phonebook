@@ -1,11 +1,18 @@
 package net.pylypchenko.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import net.pylypchenko.enums.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -13,6 +20,9 @@ import java.util.List;
 /**
  * Created by Вадим on 07.08.2017.
  */
+@Data
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -22,23 +32,39 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
+    @Pattern(regexp = "[a-zA-Z]*", message = "Username must contain only latin characters")
+    @Size(min = 3, message = "Minimum 3 characters")
     @Column(name ="username", nullable = false)
     private String username;
 
+    @Size(min = 5, message = "Minimum 5 characters")
     @Column(name ="password",nullable = false)
     private String password;
 
+    @Size(min = 5, message = "Minimum 5 characters")
     @Column(name ="full_name",nullable = false)
     private String fullName;
 
-    @Column(name ="role",nullable = false)
+    @Column(name ="role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+
+    @JsonIgnore
+    private transient final boolean isLocked = false;
+
+    @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Contact> contacts;
 
-
+    public User() {
+        this.username = "";
+        this.password = "";
+        this.fullName = "";
+        this.role = UserRole.USER;
+        this.contacts = new ArrayList<>();
+    }
 
     /**
      * An overridden method from UserDetails interface. The method checks user's account expiring.
@@ -47,7 +73,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !isLocked;
     }
 
     /**
@@ -57,7 +83,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !isLocked;
     }
 
     /**
@@ -67,7 +93,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !isLocked;
     }
 
     /**
@@ -77,7 +103,7 @@ public class User implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return true;
+        return !isLocked;
     }
 
     /**
@@ -94,96 +120,4 @@ public class User implements UserDetails {
         return grantedAuthorities;
     }
 
-    public User() {
-        this.username = "";
-        this.password = "";
-        this.fullName = "";
-        this.role = UserRole.USER;
-        this.contacts = new ArrayList<>();
-    }
-
-    public User(String username) {
-        this.username = username;
-    }
-
-    public User(int id, String username, String password, String fullName, UserRole role, List<Contact> contacts) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.role = role;
-        this.contacts = contacts;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    public List<Contact> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<Contact> contacts) {
-        this.contacts = contacts;
-    }
-
-    public void addContact( Contact contact){
-        contacts.add(contact);
-    }
-
-    public void removeContact( Contact contact){
-        contacts.remove(contact);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", role=" + role +
-                ", contacts=" + contacts +
-                '}';
-    }
 }

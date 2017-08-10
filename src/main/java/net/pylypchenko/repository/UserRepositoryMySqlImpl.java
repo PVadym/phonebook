@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Created by Вадим on 08.08.2017.
@@ -22,9 +23,12 @@ public class UserRepositoryMySqlImpl implements UserRepository  {
 
     @Override
     public User findByUsername(String username) {
-        Query query = entityManager.createQuery("select u from User u where u.username= :username")
-                .setParameter("username", username);
-        return (User) query.getSingleResult();
+        List<User> list= entityManager.createQuery("select u from User u where u.username= :username")
+                .setParameter("username", username).getResultList();
+        if(list.isEmpty()){
+            return null;
+        }
+        return list.get(0);
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * Created by Вадим on 09.08.2017.
@@ -27,10 +29,12 @@ public class LoginController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
+
     @Autowired
     public LoginController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+
     }
 
     /**
@@ -74,16 +78,20 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute User user, BindingResult bindingResult) {
-//        userRegisterValidator.validate(user, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
+    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        if( userService.findByUsername(user.getUsername())!=null){
+            model.addAttribute("username_error", "User with username \"" + user.getUsername() + "\" already exist");
+            return "registration";
+        }
 
         String oldPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(oldPassword));
         userService.add(user);
-
         return "redirect:/index";
     }
 }

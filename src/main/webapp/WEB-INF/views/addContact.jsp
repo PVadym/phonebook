@@ -36,7 +36,7 @@
                                 <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control"
                                        placeholder="Last Name" required autofocus>
                                 <div class="text-danger" role="alert">
-                                    <form:errors path="lastName"></form:errors>
+                                    <form:errors path="lastName"/>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                         <input type="text" name="firstName" id="firstName" tabindex="1" class="form-control"
                                placeholder="First Name" required autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="firstName"></form:errors>
+                            <form:errors path="firstName"/>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <input type="text" name="middleName" id="middleName" tabindex="1" class="form-control"
                                placeholder="Middle Name" required autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="firstName"></form:errors>
+                            <form:errors path="middleName"/>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <input type="text" name="mobilePhone" id="mobilePhone" tabindex="1" class="form-control"
                                placeholder="Mobile Phone" required autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="mobilePhone"></form:errors>
+                            <form:errors path="mobilePhone"/>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                         <input type="text" name="homePhone" id="homePhone" tabindex="1" class="form-control"
                                placeholder="Home Phone"  autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="homePhone"></form:errors>
+                            <form:errors path="homePhone"/>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         <input type="text" name="address" id="address" tabindex="1" class="form-control"
                                placeholder="Address" autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="address"></form:errors>
+                            <form:errors path="address"/>
                         </div>
                     </div>
                 </div>
@@ -96,11 +96,10 @@
                         <input type="text" name="email" id="email" tabindex="1" class="form-control"
                                placeholder="E-mail"  autofocus>
                         <div class="text-danger" role="alert">
-                            <form:errors path="email"></form:errors>
+                            <form:errors path="email"/>
                         </div>
                     </div>
                 </div>
-
 
                         <div class="form-group ">
                             <div class="row">
@@ -123,6 +122,5 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

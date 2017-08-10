@@ -9,11 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 /**
  * Created by Вадим on 09.08.2017.
@@ -31,8 +31,6 @@ public class ContactController {
         this.userService = userService;
     }
 
-
-
     /**
      * The method defines models and view for page to making a new startup.
      *
@@ -42,8 +40,7 @@ public class ContactController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ModelAndView getAddPage() {
         ModelAndView modelAndView = new ModelAndView();
-        Contact contact = new Contact();
-        modelAndView.addObject("contact", contact);
+        modelAndView.addObject("contact", new Contact());
         modelAndView.setViewName("addContact");
         return modelAndView;
     }
@@ -57,12 +54,11 @@ public class ContactController {
      * or or address for making startup otherwise.
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addContact(Contact contact, BindingResult bindingResult,
+    public String addContact(@Valid @ModelAttribute ("contact") Contact contact, BindingResult bindingResult,
                              @RequestParam ("username") String username) {
-//        startupValidator.validate(startup, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "addStartUp";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "addContact";
+        }
         User user = userService.findByUsername(username);
         contact.setUser(user);
         contactService.add(contact);
@@ -77,14 +73,10 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editContact(Contact contact, BindingResult bindingResult,
-                             @RequestParam ("username") String username) {
-//        startupValidator.validate(startup, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            return "addStartUp";
-//        }
-//        User user = userService.findByUsername(username);
-//        contact.setUser(user);
+    public String editContact(@Valid @ModelAttribute ("contact")Contact contact, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "editContact";
+        }
         contactService.update(contact);
         return "redirect:/";
     }
@@ -93,7 +85,6 @@ public class ContactController {
     public String deleteContact(@PathVariable("id") int id) {
 
         contactService.remove(id);
-
         return "redirect:/";
     }
 }
