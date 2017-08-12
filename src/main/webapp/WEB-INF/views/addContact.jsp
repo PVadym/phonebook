@@ -21,7 +21,7 @@
                 <div class="col-lg-12">
                     <form:form class="form-horizontal" action="/contact/add" method="post" role="form"
                                style="display: block;" modelAttribute="contact">
-                        </div>
+                </div>
                 <div class="form-group" hidden>
                     <div class="col-sm-10">
                         <input type="text" name="username" class="form-control"
@@ -29,17 +29,17 @@
 
                     </div>
                 </div>
-                        <br>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2" for="lastName">Last Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control"
-                                       placeholder="Last Name" required autofocus>
-                                <div class="text-danger" role="alert">
-                                    <form:errors path="lastName"/>
-                                </div>
-                            </div>
+                <br>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="lastName">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="lastName" id="lastName" tabindex="1" class="form-control"
+                               placeholder="Last Name" required autofocus>
+                        <div class="text-danger" role="alert">
+                            <form:errors path="lastName"/>
                         </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstName">First Name</label>
                     <div class="col-sm-10">
@@ -74,7 +74,7 @@
                     <label class="control-label col-sm-2" for="homePhone">Home Phone</label>
                     <div class="col-sm-10">
                         <input type="text" name="homePhone" id="homePhone" tabindex="1" class="form-control"
-                               placeholder="Home Phone"  autofocus>
+                               placeholder="Home Phone" autofocus>
                         <div class="text-danger" role="alert">
                             <form:errors path="homePhone"/>
                         </div>
@@ -94,33 +94,33 @@
                     <label class="control-label col-sm-2" for="email">E-mail</label>
                     <div class="col-sm-10">
                         <input type="text" name="email" id="email" tabindex="1" class="form-control"
-                               placeholder="E-mail"  autofocus>
+                               placeholder="E-mail" autofocus>
                         <div class="text-danger" role="alert">
                             <form:errors path="email"/>
                         </div>
                     </div>
                 </div>
 
-                        <div class="form-group ">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="submit" tabindex="5"
-                                           class="form-control btn-success" value="Submit">
-                                </div>
-                            </div>
+                <div class="form-group ">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="submit" tabindex="5"
+                                   class="form-control btn-success" value="Submit">
                         </div>
-                        <div class="form-group ">
-                            <div class="row">
-                                <div class="col-sm-6 col-sm-offset-3">
-                                    <input type="reset" tabindex="6"
-                                           class="form-control btn-danger" value="Reset">
-                                </div>
-                            </div>
-                        </div>
-                    </form:form>
+                    </div>
                 </div>
+                <div class="form-group ">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <input type="reset" tabindex="6"
+                                   class="form-control btn-danger" value="Reset">
+                        </div>
+                    </div>
+                </div>
+                </form:form>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

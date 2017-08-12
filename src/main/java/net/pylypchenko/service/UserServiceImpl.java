@@ -7,28 +7,44 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 /**
- * Created by Вадим on 07.08.2017.
+ * The class provides a set of methods for operations with {@link User},
+ * implementation of {@link UserService}
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 @Service
-public class UserServiceImpl implements UserService,UserDetailsService {
+public class UserServiceImpl implements UserService {
 
-
+    /**
+     * An instance of {@link UserRepository}
+     */
     private UserRepository repository;
 
-
+    /**
+     * Constructor
+     *
+     * @param repository An instance of class that implements {@link UserRepository},
+     *                   interface for working with {@link User}
+     */
     @Autowired
     public UserServiceImpl(UserRepository repository) {
         this.repository = repository;
-
     }
 
+    /**
+     * The method founds {@link User} in database by username
+     *
+     * @param username a name of user
+     * @return founded user with entered name
+     * @throws IllegalArgumentException in case if user`s name is NULL or whitespaces
+     */
     @Override
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
@@ -36,9 +52,16 @@ public class UserServiceImpl implements UserService,UserDetailsService {
             throw new IllegalArgumentException("Incorrect name of User");
         }
         return repository.findByUsername(username);
-
     }
 
+    /**
+     * The method adds a new user
+     *
+     * @param user new user to add
+     * @return added user
+     * @throws IllegalArgumentException in case if user is NULL
+     */
+    @Override
     @Transactional
     public User add(User user) throws IllegalArgumentException {
         if (user == null) {
@@ -47,6 +70,11 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         return repository.save(user);
     }
 
+    /**
+     * Method to analyze authenticated user
+     *
+     * @return boolean value. If user is authenticated, the method returns true, and return false otherwise.
+     */
     @Override
     @Transactional(readOnly = true)
     public User getAuthenticatedUser() {
@@ -59,7 +87,13 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         return user;
     }
 
-
+    /**
+     * The method load user from database by user`s name
+     *
+     * @param username a user`s name
+     * @return user with entered name
+     * @throws UsernameNotFoundException in case if user with entered name is not exist in database
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

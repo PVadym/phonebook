@@ -40,26 +40,26 @@
         </thead>
         <tbody id="fbody">
         <c:if test="${!empty contacts}">
-        <c:forEach items="${contacts}" var="contact">
-            <tr class='table-data'>
-                <td><c:out value="${contact.lastName}"/></td>
-                <td><c:out value="${contact.firstName}"/></td>
-                <td><c:out value="${contact.middleName}"/></td>
-                <td><c:out value="${contact.mobilePhone}"/></td>
-                <td><c:out value="${contact.homePhone}"/></td>
-                <td><c:out value="${contact.address}"/></td>
-                <td><c:out value="${contact.email}"/></td>
-                <td>
-                    <div class="btn-group pull-right">
+            <c:forEach items="${contacts}" var="contact">
+                <tr class='table-data'>
+                    <td><c:out value="${contact.lastName}"/></td>
+                    <td><c:out value="${contact.firstName}"/></td>
+                    <td><c:out value="${contact.middleName}"/></td>
+                    <td><c:out value="${contact.mobilePhone}"/></td>
+                    <td><c:out value="${contact.homePhone}"/></td>
+                    <td><c:out value="${contact.address}"/></td>
+                    <td><c:out value="${contact.email}"/></td>
+                    <td>
+                        <div class="btn-group pull-right">
 
-                        <a class="btn btn-xs btn-warning" role="button"
-                           href="<c:url value='/contact/update/${contact.id}'/>">Edit</a>
-                        <a class="btn btn-xs btn-danger" role="button"
-                           href="<c:url value='/contact/delete/${contact.id}'/>">Delete</a>
-                    </div>
-                </td>
-            </tr>
-        </c:forEach>
+                            <a class="btn btn-xs btn-warning" role="button"
+                               href="<c:url value='/contact/update/${contact.id}'/>">Edit</a>
+                            <a class="btn btn-xs btn-danger" role="button"
+                               href="<c:url value='/contact/delete/${contact.id}'/>">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
         </c:if>
         </tbody>
     </table>

@@ -14,32 +14,51 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
- * Created by Вадим on 09.08.2017.
+ * Class provides a set of methods for authorization of users in the system
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 @Controller
 public class LoginController {
 
+    /**
+     * An instance of implementation {@link UserService} interface.
+     */
     private UserService userService;
+
+    /**
+     * An instance of {@link PasswordEncoder}.
+     */
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * An instance of {@link Logger} for logging information
+     */
     private static final Logger LOGGER = Logger.getLogger(LoginController.class);
 
+    /**
+     * Constructor.
+     *
+     * @param userService     an instance of implementation {@link UserService} interface.
+     * @param passwordEncoder an instance of {@link PasswordEncoder}.
+     */
     @Autowired
     public LoginController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-
     }
 
     /**
      * Method returns page for authorization
      *
-     * @return an address  of page for authorization
+     * @return an address of page for authorization
      */
     @RequestMapping(
             value = "/login",
@@ -68,6 +87,11 @@ public class LoginController {
         return "redirect:/login?logout";
     }
 
+    /**
+     * Method defines models and view for page to add a new user.
+     *
+     * @return model and view for page to add a new user.
+     */
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView getRegistrationPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -76,25 +100,32 @@ public class LoginController {
         return modelAndView;
     }
 
+    /**
+     * Method to add a new user.
+     *
+     * @param user          is a {@link User} entity from request.
+     * @param bindingResult is a {@link BindingResult} with information about user.
+     * @param model         is a {@link Model}
+     * @return an address of main page or registration page in case errors presents in registration form
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
-            LOGGER.error( "Errors in the registration form");
+            LOGGER.error("Errors in the registration form");
             return "registration";
         }
 
-        if( userService.findByUsername(user.getUsername())!=null){
+        if (userService.findByUsername(user.getUsername()) != null) {
             model.addAttribute("username_error", "User with username \"" + user.getUsername() + "\" already exist");
-            LOGGER.error( "Errors in the registration form. User with username " + user.getUsername() + " already exist");
+            LOGGER.error("Errors in the registration form. User with username " + user.getUsername() + " already exist");
             return "registration";
         }
-
         String oldPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(oldPassword));
         user = userService.add(user);
 
-        LOGGER.info( "Registration completed successfully with id = " + user.getId());
+        LOGGER.info("Registration completed successfully with id = " + user.getId());
 
         return "redirect:/index";
     }

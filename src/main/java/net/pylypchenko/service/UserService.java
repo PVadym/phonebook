@@ -4,12 +4,28 @@ import net.pylypchenko.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * Created by Вадим on 08.08.2017.
+ * Interface provides a set of methods for the operation with entity {@link User}
+ * Extends {@link UserDetailsService}
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 public interface UserService extends UserDetailsService {
 
+    /**
+     * The method founds user by username
+     *
+     * @param username a name of user
+     * @return founded uses with entered name
+     */
     User findByUsername(String username);
 
+    /**
+     * The method adds a new user
+     *
+     * @param user new user to add
+     * @return added user
+     */
     User add(User user);
 
     /**

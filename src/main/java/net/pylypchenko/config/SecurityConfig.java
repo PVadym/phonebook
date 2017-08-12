@@ -9,19 +9,32 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 /**
- * Created by Вадим on 09.08.2017.
+ * Spring Security configuration class.
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * An instance of UserDetailsService for working with registered users.
+     */
     @Autowired
     private UserDetailsService userDetailsService;
 
+
+    /**
+     * The Method sets users access to pages of the site.
+     *
+     * @param httpSecurity An instance of {@link HttpSecurity} class
+     * @throws Exception An exception that can be thrown by HttpSecurity class methods
+     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -29,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(false)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login","/register").permitAll()
+                .antMatchers("/login", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -38,18 +51,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .csrf().disable();
-
     }
 
-
+    /**
+     * Method for configuration authentication of users
+     *
+     * @param builder An instance of {@link AuthenticationManagerBuilder} class
+     * @throws Exception An exception that can be thrown by AuthenticationManagerBuilder class methods
+     */
     @Override
     @Autowired
     protected void configure(final AuthenticationManagerBuilder builder) throws Exception {
         builder.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * The method configures an implementation of {@link PasswordEncoder}
+     *
+     * @return an instance of {@link BCryptPasswordEncoder}
+     */
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

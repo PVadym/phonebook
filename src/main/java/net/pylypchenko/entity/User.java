@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import net.pylypchenko.enums.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +17,11 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Вадим on 07.08.2017.
+ * The entity class, describe User entity, provides a set of standard methods for working with this entity,
+ * implements {@link UserDetails} interface
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 @Data
 @AllArgsConstructor
@@ -27,62 +30,67 @@ import java.util.List;
 @Table(name = "users")
 public class User implements UserDetails {
 
+    /**
+     * Unique identifier.
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    /**
+     * User's username
+     */
     @Pattern(regexp = "[a-zA-Z]*", message = "Username must contain only latin characters")
     @Size(min = 3, message = "Minimum 3 characters")
-    @Column(name ="username", nullable = false)
+    @Column(name = "username", nullable = false)
     private String username;
 
+    /**
+     * User's password
+     */
     @Size(min = 5, message = "Minimum 5 characters")
-    @Column(name ="password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
+    /**
+     * User's full name
+     */
     @Size(min = 5, message = "Minimum 5 characters")
-    @Column(name ="full_name",nullable = false)
+    @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(name ="role")
+    /**
+     * User's role
+     */
+    @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @JsonIgnore
+    /**
+     * This field has information about locking user's account. If isLocked == false, then account isn't locked,
+     * if isLocked == true, then account is locked
+     */
     @Transient
-    private boolean enabled;
+    private boolean isLocked;
 
-    @JsonIgnore
-    @Transient
-    private boolean accountNonExpired;
-
-    @JsonIgnore
-    @Transient
-    private boolean accountNonLocked;
-
-    @JsonIgnore
-    @Transient
-    private boolean credentialsNonExpired;
-
-    @JsonIgnore
-    @Transient
-    private List<GrantedAuthority> authorities;
-
-    @JsonIgnore
-    @Transient
-    private boolean isLocked = false;
-
+    /**
+     * A list of contacts that the user create
+     */
     @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")
     private List<Contact> contacts;
 
+    /**
+     * Default constructor
+     */
     public User() {
         this.username = "";
         this.password = "";
         this.fullName = "";
         this.role = UserRole.USER;
         this.contacts = new ArrayList<>();
+        this.isLocked = false;
     }
 
     /**
@@ -91,6 +99,7 @@ public class User implements UserDetails {
      * @return true if account is't expired, or false otherwise. In our case returns not isLocked value.
      */
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return !isLocked;
     }
@@ -101,6 +110,7 @@ public class User implements UserDetails {
      * @return true if account is't locked, or false otherwise. In our case returns not isLocked value.
      */
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return !isLocked;
     }
@@ -111,6 +121,7 @@ public class User implements UserDetails {
      * @return true if account's credentials is't expired, or false otherwise. In our case returns not isLocked value.
      */
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return !isLocked;
     }
@@ -121,6 +132,7 @@ public class User implements UserDetails {
      * @return true if account is enabled, or false otherwise. In our case returns not isLocked value.
      */
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return !isLocked;
     }
@@ -132,6 +144,7 @@ public class User implements UserDetails {
      * and the entry contains information about user's role.
      */
     @Override
+    @JsonIgnore
     public Collection<GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + getRole().name());

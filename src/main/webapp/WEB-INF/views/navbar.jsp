@@ -25,9 +25,7 @@
                     <a class="btn btn-primary" role="button" href="<c:url value='/register'/>">Registration</a>
                     <a class="btn btn-primary" role="button" href="<c:url value='/login'/>">Login</a>
                 </sec:authorize>
-
             </div>
-
         </div>
         <hr>
     </div>

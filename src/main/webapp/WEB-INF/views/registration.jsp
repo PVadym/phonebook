@@ -15,8 +15,6 @@
         <h4><b>Registration</b></h4>
         <div class="jumbotron">
             <form:form action="/register" method="post" modelAttribute="user">
-
-
                 <div class="form-group">
                     <input type="text" class="form-control" name="username" autofocus required placeholder="Username"/>
                     <div class="text-danger" role="alert">
@@ -36,8 +34,6 @@
                         <form:errors path="fullName"/>
                     </div>
                 </div>
-
-
                 <div class="form-group ">
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">

@@ -1,7 +1,10 @@
 package net.pylypchenko.enums;
 
 /**
- * Created by Вадим on 07.08.2017.
+ * An Enum of user's roles
+ *
+ * @author Vadym Pylypchenko
+ * @version 1.0
  */
 public enum UserRole {
     ADMIN, USER

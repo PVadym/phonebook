@@ -10,8 +10,6 @@
 <body>
 <jsp:include page="/WEB-INF/views/navbar.jsp"/>
 <div class="container">
-
-
     <div class="col-lg-4 col-md-offset-4">
         <h4><b>Login</b></h4>
         <c:if test="${param.error ne null}">
@@ -57,8 +55,6 @@
             </form>
         </div>
     </div>
-
-
 </div>
 </body>
 </html>
