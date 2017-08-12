@@ -50,9 +50,29 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @JsonIgnore
+    @Transient
+    private boolean enabled;
 
     @JsonIgnore
-    private transient final boolean isLocked = false;
+    @Transient
+    private boolean accountNonExpired;
+
+    @JsonIgnore
+    @Transient
+    private boolean accountNonLocked;
+
+    @JsonIgnore
+    @Transient
+    private boolean credentialsNonExpired;
+
+    @JsonIgnore
+    @Transient
+    private List<GrantedAuthority> authorities;
+
+    @JsonIgnore
+    @Transient
+    private boolean isLocked = false;
 
     @JsonIgnore
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "user")

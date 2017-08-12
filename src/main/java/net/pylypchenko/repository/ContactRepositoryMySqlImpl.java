@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Вадим on 08.08.2017.
  */
 @Repository
-//@Profile("mysql")
+@Profile("profileMysql")
 public class ContactRepositoryMySqlImpl implements ContactRepository {
 
     @PersistenceContext
@@ -36,8 +36,7 @@ public class ContactRepositoryMySqlImpl implements ContactRepository {
 
     @Override
     public Contact update(Contact contact) {
-        Contact contactToUpdate = findById(contact.getId());
-        return entityManager.merge(contactToUpdate);
+        return entityManager.merge(contact);
     }
 
     @Override

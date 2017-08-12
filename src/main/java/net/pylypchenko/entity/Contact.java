@@ -57,7 +57,7 @@ public class Contact {
     @Column(name ="e_mail")
     private String email;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name ="user_id")
     private User user;

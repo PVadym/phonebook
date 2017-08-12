@@ -47,6 +47,18 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         return repository.save(user);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public User getAuthenticatedUser() {
+        User user;
+        try {
+            user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch (ClassCastException e) {
+            user = new User();
+        }
+        return user;
+    }
+
 
     @Override
     @Transactional(readOnly = true)

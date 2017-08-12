@@ -15,13 +15,14 @@ import java.util.List;
  * Created by Вадим on 08.08.2017.
  */
 @Repository
-//@Profile("mysql")
+@Profile("profileMysql")
 public class UserRepositoryMySqlImpl implements UserRepository  {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
+
     public User findByUsername(String username) {
         List<User> list= entityManager.createQuery("select u from User u where u.username= :username")
                 .setParameter("username", username).getResultList();

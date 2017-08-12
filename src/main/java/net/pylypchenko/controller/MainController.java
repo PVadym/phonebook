@@ -36,8 +36,7 @@ public class MainController {
     )
     public ModelAndView getIndexPage() {
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(auth.getName());
+        User user = userService.getAuthenticatedUser();
         List<Contact> contacts = contactService.getAll()
                 .stream()
                 .filter(contact -> contact.getUser()!=null)

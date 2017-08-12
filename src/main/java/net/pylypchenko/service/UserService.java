@@ -11,4 +11,11 @@ public interface UserService extends UserDetailsService {
     User findByUsername(String username);
 
     User add(User user);
+
+    /**
+     * Method for getting authenticated user
+     *
+     * @return authenticated user
+     */
+    User getAuthenticatedUser();
 }

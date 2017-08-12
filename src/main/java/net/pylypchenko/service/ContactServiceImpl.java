@@ -49,7 +49,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Transactional
     public Contact update(Contact contact) {
-        return this.add(contact);
+        return repository.update(contact);
     }
 
 
