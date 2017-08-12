@@ -32,7 +32,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @Pattern(regexp = "[a-zA-Z]*", message = "Username must contain only latin characters")
     @Size(min = 3, message = "Minimum 3 characters")
     @Column(name ="username", nullable = false)

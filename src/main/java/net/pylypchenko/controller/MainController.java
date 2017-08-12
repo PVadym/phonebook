@@ -24,6 +24,8 @@ public class MainController {
     private UserService userService;
     private ContactService contactService;
 
+
+
     @Autowired
     public MainController(UserService userService, ContactService contactService) {
         this.userService = userService;
@@ -45,6 +47,7 @@ public class MainController {
 
         modelAndView.addObject("contacts", contacts);
         modelAndView.setViewName("index");
+
         return modelAndView;
     }
 }

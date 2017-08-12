@@ -7,7 +7,6 @@
 <head>
     <title>Edit Contact</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/navbar.jsp"/>
@@ -26,7 +25,6 @@
                     <div class="col-sm-10">
                         <input type="text" name="username" class="form-control"
                                value="${pageContext.request.userPrincipal.name}">
-
                     </div>
                 </div>
                 <div class="form-group" hidden>

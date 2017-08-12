@@ -1,5 +1,13 @@
+WEB application "PhoneBook"
+Created for Lardi Ltd
 
---  SQl query for create DB and tables
+Pylypchenko Vadym
+16.08.2017
+
+==========================================================================
+
+
+--  SQl query for create DB and tables --
 
 DROP DATABASE IF EXISTS phonebookdb;
 CREATE DATABASE IF NOT EXISTS phonebookdb

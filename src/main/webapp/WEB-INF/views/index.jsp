@@ -4,7 +4,7 @@
 <head>
     <title>Main Page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js\jquery-3.2.1.js"></script>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/navbar.jsp"/>
@@ -64,6 +64,6 @@
         </tbody>
     </table>
 </div>
-<script src="filterTable.js"></script>
+<script src="js/filterTable.js"></script>
 </body>
 </html>

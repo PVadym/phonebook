@@ -2,6 +2,7 @@ package net.pylypchenko.controller;
 
 import net.pylypchenko.entity.User;
 import net.pylypchenko.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class LoginController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class);
 
     @Autowired
     public LoginController(UserService userService, PasswordEncoder passwordEncoder) {
@@ -78,17 +80,22 @@ public class LoginController {
     public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            LOGGER.error( "Errors in the registration form");
             return "registration";
         }
 
         if( userService.findByUsername(user.getUsername())!=null){
             model.addAttribute("username_error", "User with username \"" + user.getUsername() + "\" already exist");
+            LOGGER.error( "Errors in the registration form. User with username " + user.getUsername() + " already exist");
             return "registration";
         }
 
         String oldPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(oldPassword));
-        userService.add(user);
+        user = userService.add(user);
+
+        LOGGER.info( "Registration completed successfully with id = " + user.getId());
+
         return "redirect:/index";
     }
 }

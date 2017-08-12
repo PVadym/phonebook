@@ -3,6 +3,7 @@ package net.pylypchenko.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.pylypchenko.entity.Contact;
 import net.pylypchenko.utils.IdGenerator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -26,6 +27,8 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
 
     private final String CONTACTS_FOLDER = File.separator + "contacts" + File.separator;
 
+    private static final Logger LOGGER = Logger.getLogger(ContactRepositoryJsonImpl.class);
+
 
     @Override
     public Contact findById(int id) {
@@ -35,6 +38,7 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
         try {
             contact = mapper.readValue(file, Contact.class);
         } catch (IOException e) {
+            LOGGER.error( "Contact with id =  " + id + "does not exist in db");
             return null;
         }
         return contact;
@@ -54,6 +58,7 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
             }
 
         } catch (IOException e) {
+            LOGGER.error( "Error during findAll() method");
             throw new RuntimeException(e);
         }
         return contacts;
@@ -76,6 +81,7 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
                     mapper.writeValue(file, contact);
                 }
         } catch (IOException e) {
+            LOGGER.error( "Error during saving new Contact with id = " + contact.getId());
             throw new RuntimeException(e);
         }
         return contact;
@@ -89,6 +95,7 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
         try {
             mapper.writeValue(file, contact);
         } catch (IOException e) {
+            LOGGER.error( "Error during updating Contact with id = " + contact.getId());
             throw new RuntimeException(e);
         }
         return contact;
@@ -98,6 +105,7 @@ public class ContactRepositoryJsonImpl implements ContactRepository {
     public void delete(int id) {
         File file = new File(db + CONTACTS_FOLDER + id + JSON);
         file.delete();
+
     }
 
 }

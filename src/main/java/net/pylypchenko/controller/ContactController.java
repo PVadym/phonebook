@@ -4,12 +4,10 @@ import net.pylypchenko.entity.Contact;
 import net.pylypchenko.entity.User;
 import net.pylypchenko.service.ContactService;
 import net.pylypchenko.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +22,8 @@ public class ContactController {
 
     private ContactService contactService;
     private UserService userService;
+
+    private static final Logger LOGGER = Logger.getLogger(ContactController.class);
 
     @Autowired
     public ContactController(ContactService contactService, UserService userService) {
@@ -57,11 +57,13 @@ public class ContactController {
     public String addContact(@Valid @ModelAttribute ("contact") Contact contact, BindingResult bindingResult,
                              @RequestParam ("username") String username) {
         if (bindingResult.hasErrors()) {
+            LOGGER.error( "Errors in the add new Contact form");
             return "addContact";
         }
         User user = userService.findByUsername(username);
         contact.setUser(user);
-        contactService.add(contact);
+        contact = contactService.add(contact);
+        LOGGER.info( "Saving new Contact completed successfully with id = " +contact.getId() );
         return "redirect:/";
     }
 
@@ -75,9 +77,11 @@ public class ContactController {
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editContact(@Valid @ModelAttribute ("contact")Contact contact, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            LOGGER.error( "Errors in the edit Contact form");
             return "editContact";
         }
         contactService.update(contact);
+        LOGGER.info( "Updating Contact completed successfully with id = " +contact.getId() );
         return "redirect:/";
     }
 
@@ -85,6 +89,7 @@ public class ContactController {
     public String deleteContact(@PathVariable("id") int id) {
 
         contactService.remove(id);
+        LOGGER.info( "Contact deleted successfully with id = " + id );
         return "redirect:/";
     }
 }

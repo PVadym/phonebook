@@ -3,6 +3,7 @@ package net.pylypchenko.repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.pylypchenko.entity.User;
 import net.pylypchenko.utils.IdGenerator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,8 @@ public class UserRepositoryJsonImpl implements UserRepository {
     private final String JSON = ".json";
     private final String USERS_FOLDER = File.separator + "users" + File.separator;
 
+    private static final Logger LOGGER = Logger.getLogger(UserRepositoryJsonImpl.class);
+
 
 
     @Override
@@ -34,6 +37,7 @@ public class UserRepositoryJsonImpl implements UserRepository {
         try {
             user = mapper.readValue(file, User.class);
         } catch (IOException e) {
+            LOGGER.error( "User with username =  " + username + "does not exist in db");
             return null;
         }
         return user;
@@ -59,6 +63,7 @@ public class UserRepositoryJsonImpl implements UserRepository {
             }
 
         } catch( IOException e){
+            LOGGER.error( "Error during saving new Contact with id = " + user.getId());
             throw new RuntimeException(e);
         }
         return user;
