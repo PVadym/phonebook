@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(exclude = "id")
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

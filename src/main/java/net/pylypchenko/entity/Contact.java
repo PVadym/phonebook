@@ -1,10 +1,7 @@
 package net.pylypchenko.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -19,7 +16,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(exclude = "id")
 @Entity
 @Table(name = "contacts")
 public class Contact {
